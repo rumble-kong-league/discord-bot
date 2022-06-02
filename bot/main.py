@@ -6,20 +6,20 @@ from util import globals_util, util, opensea_util, kong_util
 from time import time, sleep
 
 
-def initializeBot():
+def initialize_bot():
     Util.log("Initializing Discord bot with token: " + Globals.DISCORD_TOKEN)
     bot = commands.Bot(command_prefix="!", case_insensitive=True)
-    registerCommands(bot)
+    register_commands(bot)
     bot.run(Globals.DISCORD_TOKEN)
     return bot
 
 
 # Include chat commands within this function to ensure they are registered on startup
-def registerCommands(bot):
+def register_commands(bot):
 
     # == !IAmKong ====================================================================
     @bot.command(
-        help="I am Kong!", 
+        help="I am Kong!",
         brief="I am Kong!"
     )
     async def iamkong(ctx, *_args):
@@ -28,7 +28,7 @@ def registerCommands(bot):
 
     # == !Yes =========================================================================
     @bot.command(
-        help="Yes.", 
+        help="Yes.",
         brief="Yes."
     )
     async def yes(ctx, *_args):
@@ -37,20 +37,20 @@ def registerCommands(bot):
 
     # == !Praise =======================================================================
     @bot.command(
-        help="Give thanks to the RKL team members.", 
+        help="Give thanks to the RKL team members.",
         brief="name (string): Name of the team member to praise"
     )
     async def praise(ctx, *args):
         name = args[0]
         if name not in Globals.STAFF:
             name = "team"
-            
+
         gif = Globals.STAFF_PATH + Globals.STAFF[name]
         await ctx.channel.send(file=discord.File(gif))
 
     # == !Image =========================================================================
     @bot.command(
-        help="Get the image of a Rumble Kong by id.", 
+        help="Get the image of a Rumble Kong by id.",
         brief="id (number): Token ID of the Kong to display"
     )
     async def image(ctx, *args):
@@ -65,12 +65,13 @@ def registerCommands(bot):
             "token_ids": id,
             "collection_slug": "rumble-kong-league"
         }
-        kongUrl = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0][imageString]
+        kongUrl = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)[
+            "assets"][0][imageString]
         await ctx.channel.send(str(kongUrl))
 
     # == !Jersey ===========================================================================
     @bot.command(
-        help="Rep your team's jersey on your Kong.", 
+        help="Rep your team's jersey on your Kong.",
         brief="id (number): Token ID of the Kong to display, team (string): Name of the team to use the jersey from"
     )
     async def jersey(ctx, *args):
@@ -86,7 +87,7 @@ def registerCommands(bot):
 
     # == !Drip =============================================================================
     @bot.command(
-        help="Add some drip to your Kong.", 
+        help="Add some drip to your Kong.",
         brief="id (number): Token ID of the Kong to display, team (string): Name of the drip to apply"
     )
     async def drip(ctx, *args):
@@ -102,7 +103,7 @@ def registerCommands(bot):
 
     # == !Vote =============================================================================
     @bot.command(
-        help="Vote for your favorite jersey", 
+        help="Vote for your favorite jersey",
         brief="team (string): Name of the team who's jersey you are voting for"
     )
     async def vote(ctx, *_args):
@@ -113,7 +114,8 @@ def registerCommands(bot):
             Util.get_formatted_datetime(),
         ]
 
-        credentials = Util.read_service_account_credentials(Globals.SERVICE_ACCOUNT_KEY_FILE)
+        credentials = Util.read_service_account_credentials(
+            Globals.SERVICE_ACCOUNT_KEY_FILE)
         service = build("sheets", "v4", credentials=credentials)
 
         service.spreadsheets().values().append(
@@ -126,7 +128,7 @@ def registerCommands(bot):
 
     # == !Floor ============================================================================
     @bot.command(
-        help="Get statistics about the floor price of RKL collections.", 
+        help="Get statistics about the floor price of RKL collections.",
         brief="collection (string):"
     )
     async def floor(ctx, *args):
@@ -137,9 +139,11 @@ def registerCommands(bot):
             filter = args[1].title()
         if collection == "sneakers":
             filter = "Sneakers"
-        
-        listings = Util.read_json(Globals.CACHE_PATH + collection + "-asset-cache.json")["assets"]
-        embed = OpenSeaUtil.construct_floor_stats_embed(collection, listings, filter)
+
+        listings = Util.read_json(
+            Globals.CACHE_PATH + collection + "-asset-cache.json")["assets"]
+        embed = OpenSeaUtil.construct_floor_stats_embed(
+            collection, listings, filter)
         await ctx.channel.send(embed=embed)
 
 
@@ -147,20 +151,21 @@ if __name__ == "__main__":
 
     if Globals.LOG:
         Util.initialize_log()
-    
+
     success = True
     for collection in Globals.COLLECTIONS:
         if exists(Globals.CACHE_PATH + collection + "-asset-cache.json"):
-            Util.log("Skipping caching assets for " + collection + " because file already exists")
-            
+            Util.log("Skipping caching assets for " +
+                     collection + " because file already exists")
+
         else:
             success = OpenSeaUtil.initialize_asset_cache(collection)
             if success == False:
                 break
 
     if success:
-        bot = initializeBot()
+        bot = initialize_bot()
 
-        #while True:
+        # while True:
         #    OpenSeaUtil.update_asset_cache(collection)
         #    sleep(Globals.CACHE_UPDATE_RATE)
