@@ -6,16 +6,16 @@ from util import globals_util, util, opensea_util, kong_util
 from time import time, sleep
 
 
-def initializeBot():
+def initialize_bot():
     Util.log("Initializing Discord bot with token: " + Globals.DISCORD_TOKEN)
     bot = commands.Bot(command_prefix="!", case_insensitive=True)
-    registerCommands(bot)
+    register_commands(bot)
     bot.run(Globals.DISCORD_TOKEN)
     return bot
 
 
 # Include chat commands within this function to ensure they are registered on startup
-def registerCommands(bot):
+def register_commands(bot):
 
     # == !IAmKong ====================================================================
     @bot.command(
@@ -56,17 +56,17 @@ def registerCommands(bot):
     async def image(ctx, *args):
         id = args[0]
 
-        imageString = "image_url"
+        image_string = "image_url"
         if len(args) > 1:
             if args[1] == "hd":
-                imageString = "image_original_url"
+                image_string = "image_original_url"
 
         params = {
             "token_ids": id,
             "collection_slug": "rumble-kong-league"
         }
-        kongUrl = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0][imageString]
-        await ctx.channel.send(str(kongUrl))
+        kong_url = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0][image_string]
+        await ctx.channel.send(str(kong_url))
 
     # == !Jersey ===========================================================================
     @bot.command(
@@ -75,11 +75,11 @@ def registerCommands(bot):
     )
     async def jersey(ctx, *args):
         id = args[0]
-        teamJersey = args[1]
+        team_jersey = args[1]
 
         kong = KongUtil.draw_nakes_kong(int(id))
-        jerseyKong = KongUtil.apply_drip(kong, teamJersey, True)
-        jerseyKong.save(Globals.TMP_PATH + "testkong.png")
+        jersey_kong = KongUtil.apply_drip(kong, team_jersey, True)
+        jersey_kong.save(Globals.TMP_PATH + "testkong.png")
 
         image = discord.File(Globals.TMP_PATH + "testkong.png")
         await ctx.channel.send(file=image)
@@ -94,8 +94,8 @@ def registerCommands(bot):
         dripType = args[1]
 
         kong = KongUtil.draw_nakes_kong(int(id))
-        drippedKong = KongUtil.apply_drip(kong, dripType, False)
-        drippedKong.save(Globals.TMP_PATH + "testkong.png")
+        dripped_kong = KongUtil.apply_drip(kong, dripType, False)
+        dripped_kong.save(Globals.TMP_PATH + "testkong.png")
 
         image = discord.File(Globals.TMP_PATH + "testkong.png")
         await ctx.channel.send(file=image)
@@ -122,6 +122,7 @@ def registerCommands(bot):
             body={"majorDimension": "ROWS", "values": [rows]},
             valueInputOption="USER_ENTERED",
         ).execute()
+
         await ctx.channel.send("Your Vote has been logged")
 
     # == !Floor ============================================================================
@@ -159,7 +160,7 @@ if __name__ == "__main__":
                 break
 
     if success:
-        bot = initializeBot()
+        bot = initialize_bot()
 
         #while True:
         #    OpenSeaUtil.update_asset_cache(collection)
