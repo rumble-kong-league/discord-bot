@@ -16,14 +16,13 @@ def replace_pixels(data, fromRGB, toRGB):
     return new_data
 
 
-def draw_nakes_kong(kongId):
-    params = {
-        "token_ids": kongId,
-        "collection_slug": "rumble-kong-league"
-    }
-    kong_assets = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]
+def draw_naked_kong(kongId):
+    params = {"token_ids": kongId, "collection_slug": "rumble-kong-league"}
+    kong_assets = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)[
+        "assets"
+    ][0]
     kong_traits = kong_assets["traits"]
-    
+
     kong_base = {}
     for asset in kong_traits:
         if asset["trait_type"] == "Background":
@@ -32,14 +31,15 @@ def draw_nakes_kong(kongId):
             kong_base["Fur"] = Globals.NAKED_KONG_ID_BY_FUR[asset["value"]]
             background_color = Globals.NAKED_KONG_EXAMPLE_BACKGROUNDS[asset["value"]]
 
-    params = {
-        "token_ids": kong_base["Fur"],
-        "collection_slug": "rumble-kong-league"
-    }
-    naked_kong_image_url = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]["image_url"]
+    params = {"token_ids": kong_base["Fur"], "collection_slug": "rumble-kong-league"}
+    naked_kong_image_url = OpenSeaUtil.fetch_opensea_asset(
+        Globals.OPENSEA_ASSETS_URL, params
+    )["assets"][0]["image_url"]
     naked_kong_image = Util.fetch_image(naked_kong_image_url, (512, 512))
 
-    replaced_background = replace_pixels(naked_kong_image.getdata(), background_color, kong_base["Background"])
+    replaced_background = replace_pixels(
+        naked_kong_image.getdata(), background_color, kong_base["Background"]
+    )
     naked_kong_image.putdata(replaced_background)
 
     cropped = naked_kong_image.crop((0, 360, 374, 512)).convert("RGBA")
@@ -54,10 +54,10 @@ def draw_nakes_kong(kongId):
     return kong_image
 
 
-def apply_drip(kong_image, dripType, isJersey=False):
-    drip_image_url = Globals.DRIP_PATH + Globals.DRIP[dripType]
+def apply_drip(kong_image, drip_type, isJersey=False):
+    drip_image_url = Globals.DRIP_PATH + Globals.DRIP[drip_type]
     if isJersey == True:
-        drip_image_url = Globals.JERSEYS_PATH + Globals.DRIP[dripType]
+        drip_image_url = Globals.JERSEYS_PATH + Globals.DRIP[drip_type]
     drip_image = Image.open(drip_image_url).resize((512, 512))
     kong_image.paste(drip_image, (0, 0), mask=drip_image)
 

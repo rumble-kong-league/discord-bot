@@ -2,9 +2,12 @@ from os import getenv
 from dotenv import load_dotenv
 
 LOG_FILE = ""
+
+
 def set_log_file(path):
     global LOG_FILE
     LOG_FILE = path
+
 
 DEFAULT_REST_TIME = 180
 DEFAULT_MAX_ATTEMPTS = 3
@@ -21,6 +24,7 @@ MEMES_PATH = ASSETS_PATH + "memes/"
 STAFF_PATH = ASSETS_PATH + "staff/"
 
 load_dotenv()
+
 DISCORD_TOKEN = getenv("DISCORD_TOKEN")
 DISCORD_GENERAL_CHANNEL_ID = int(getenv("DISCORD_GENERAL_CHANNEL_ID"))
 OPENSEA_API_KEY = getenv("OPENSEA_API_KEY")
@@ -40,16 +44,25 @@ COLLECTIONS = {
     "kongs": {
         "verbose": "Rumble Kong League",
         "slug": "rumble-kong-league",
-        "image": "https://lh3.googleusercontent.com/x18rNFBg9leLL9TtHkhhiC8cwIurh1UhMKU6TL_JMbGyUsY8MTMhyPiz8Nz7VRJHShEgIQlCP070UB9gGWvJ05ST7IclovIWnwAUww=s120",
-        "contract_address": "0xef0182dc0574cd5874494a120750fd222fdb909a"
+        "image": (
+            "https://lh3.googleusercontent.com/"
+            "x18rNFBg9leLL9TtHkhhiC8cwIurh1UhMKU6TL_"
+            "JMbGyUsY8MTMhyPiz8Nz7VRJHShEgIQlCP070UB9"
+            "gGWvJ05ST7IclovIWnwAUww=s120"
+        ),
+        "contract_address": "0xef0182dc0574cd5874494a120750fd222fdb909a",
     },
-
     "sneakers": {
         "verbose": "Rumble Kong League Sneakers",
         "slug": "rumble-kong-league-sneakers",
-        "image": "https://lh3.googleusercontent.com/dPsSX97-jVU9igM_6bGyIcL9A13kWBz5wlb-b76OuEiRX3H7dMVUHWA0-U7hFhYVr4R7eC0Zu9A75SbfEiaAOFl5Yo5V914BbIOX=s120",
-        "contract_address": "0x5180f2a553e76fac3cf019c8011711cf2b5c6035"
-    }
+        "image": (
+            "https://lh3.googleusercontent.com/"
+            "dPsSX97-jVU9igM_6bGyIcL9A13kWBz5wlb-"
+            "b76OuEiRX3H7dMVUHWA0-U7hFhYVr4R7eC0Zu"
+            "9A75SbfEiaAOFl5Yo5V914BbIOX=s120"
+        ),
+        "contract_address": "0x5180f2a553e76fac3cf019c8011711cf2b5c6035",
+    },
 }
 
 STAFF = {
@@ -62,13 +75,13 @@ STAFF = {
     "goodpencil": "goodpencil.gif",
     "sickpencil": "goodpencil.gif",
     "kongtracker": "kongtracker.gif",
-    "steph": "steph.gif"
+    "steph": "steph.gif",
 }
 
 DRIP = {
     "hoodie": "hoodie.png",
     "virgil": "virgil_teeshirt.png",
-    "pinksuit": "pinksuit.png"
+    "pinksuit": "pinksuit.png",
 }
 
 TEAMS = {
@@ -90,7 +103,7 @@ TEAMS = {
     "kongcrete": "kongcrete.png",
     "kings": "kings.png",
     "empire": "empire.png",
-    "surfcity": "surfcity.png"
+    "surfcity": "surfcity.png",
 }
 
 BACKGROUND_TO_RGBA = {
@@ -104,7 +117,7 @@ BACKGROUND_TO_RGBA = {
     "Red": [182, 10, 48, 1],
     "Brown": [155, 97, 80, 0],
     "Yellow": [254, 218, 94, 1],
-    "Light Grey": [186, 193, 220, 1]
+    "Light Grey": [186, 193, 220, 1],
 }
 
 NAKED_KONG_ID_BY_FUR = {
@@ -121,7 +134,7 @@ NAKED_KONG_ID_BY_FUR = {
     "Pink": 33,
     "Grey": 101,
     "Black": 167,
-    "Brown": 44
+    "Brown": 44,
 }
 
 NAKED_KONG_EXAMPLE_BACKGROUNDS = {
@@ -138,5 +151,5 @@ NAKED_KONG_EXAMPLE_BACKGROUNDS = {
     "Pink": [186, 193, 220],
     "Grey": [186, 193, 220],
     "Black": [75, 212, 205],
-    "Brown": [109, 173, 222]
+    "Brown": [109, 173, 222],
 }

@@ -33,14 +33,14 @@ def log(text, depth=0):
 
 def read_json(path):
     data = ""
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
 
 
 def write_json(path, data):
     text = json.dumps(data)
-    with open(path, 'w+') as outfile:
+    with open(path, "w+") as outfile:
         outfile.write(text)
 
 
@@ -58,6 +58,5 @@ def from_wei(wei, precision=2):
 
 def read_service_account_credentials(path):
     return Credentials.from_service_account_file(
-        path, 
-        scopes=["https://www.googleapis.com/auth/spreadsheets"]
+        path, scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
