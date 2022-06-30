@@ -71,15 +71,9 @@ def register_commands(bot):
         brief="id (number): Token ID of the Kong to display, team (string): Name of the team to use the jersey from",
     )
     async def jersey(ctx, *args):
-        id_ = args[0]
-        team_jersey = args[1]
-
-        kong = kong_util.draw_naked_kong(int(id_))
-        jersey_kong = kong_util.apply_drip(kong, team_jersey, True)
-        jersey_kong.save(os.path.join(consts.TMP_PATH, "testkong.png"))
-
-        image = discord.File(os.path.join(consts.TMP_PATH, "testkong.png"))
-        await ctx.channel.send(file=image)
+        kong = kong_util.draw_naked_kong(int(args[0]))
+        jersey_kong = kong_util.apply_drip(kong, args[1], True)
+        await ctx.channel.send(file=jersey_kong)
 
     # == !Drip =============================================================================
     @bot.command(
@@ -87,15 +81,9 @@ def register_commands(bot):
         brief="id (number): Token ID of the Kong to display, team (string): Name of the drip to apply",
     )
     async def drip(ctx, *args):
-        id_ = args[0]
-        drip_type = args[1]
-
-        kong = kong_util.draw_naked_kong(int(id_))
-        dripped_kong = kong_util.apply_drip(kong, drip_type, False)
-        dripped_kong.save(os.path.join(consts.TMP_PATH, "testkong.png"))
-
-        image = discord.File(os.path.join(consts.TMP_PATH, "testkong.png"))
-        await ctx.channel.send(file=image)
+        kong = kong_util.draw_naked_kong(int(args[0]))
+        dripped_kong = kong_util.apply_drip(kong, args[1], False)
+        await ctx.channel.send(file=dripped_kong)
 
     # TODO:
     # == !Floor ============================================================================
