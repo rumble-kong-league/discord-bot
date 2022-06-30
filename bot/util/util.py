@@ -7,18 +7,18 @@ import json
 from util import consts
 
 
-def get_formatted_datetime(asPath=False):
+def get_formatted_datetime(as_path=False):
     time = datetime.now()
-    if asPath:
+    if as_path:
         return time.strftime("%d-%m-%Y_%H-%M-%S")
     return time.strftime("%d/%m/%Y %H:%M:%S")
 
 
 def initialize_log():
-    name = get_formatted_datetime(asPath=True) + ".txt"
+    name = get_formatted_datetime(as_path=True) + ".txt"
     path = consts.LOG_PATH + name
     open(path, "w").close()
-    consts.setLogFile(name)
+    consts.set_log_file(name)
     return path
 
 

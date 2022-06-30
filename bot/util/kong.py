@@ -21,44 +21,44 @@ def draw_nakes_kong(kongId):
         "token_ids": kongId,
         "collection_slug": "rumble-kong-league"
     }
-    kongAssets = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]
-    kongTraits = kongAssets["traits"]
+    kong_assets = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]
+    kong_traits = kong_assets["traits"]
     
-    kongBase = {}
-    for asset in kongTraits:
+    kong_base = {}
+    for asset in kong_traits:
         if asset["trait_type"] == "Background":
-            kongBase["Background"] = Globals.BACKGROUND_TO_RGBA[asset["value"]]
+            kong_base["Background"] = Globals.BACKGROUND_TO_RGBA[asset["value"]]
         elif asset["trait_type"] == "Fur":
-            kongBase["Fur"] = Globals.NAKED_KONG_ID_BY_FUR[asset["value"]]
-            backgroundColor = Globals.NAKED_KONG_EXAMPLE_BACKGROUNDS[asset["value"]]
+            kong_base["Fur"] = Globals.NAKED_KONG_ID_BY_FUR[asset["value"]]
+            background_color = Globals.NAKED_KONG_EXAMPLE_BACKGROUNDS[asset["value"]]
 
     params = {
-        "token_ids": kongBase["Fur"],
+        "token_ids": kong_base["Fur"],
         "collection_slug": "rumble-kong-league"
     }
-    nakedKongImageUrl = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]["image_url"]
-    nakedKongImage = Util.fetch_image(nakedKongImageUrl, (512, 512))
+    naked_kong_image_url = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)["assets"][0]["image_url"]
+    naked_kong_image = Util.fetch_image(naked_kong_image_url, (512, 512))
 
-    replacedBackground = replace_pixels(nakedKongImage.getdata(), backgroundColor, kongBase["Background"])
-    nakedKongImage.putdata(replacedBackground)
+    replaced_background = replace_pixels(naked_kong_image.getdata(), background_color, kong_base["Background"])
+    naked_kong_image.putdata(replaced_background)
 
-    cropped = nakedKongImage.crop((0, 360, 374, 512)).convert("RGBA")
-    leftShoulder = nakedKongImage.crop((0, 310, 184, 385)).convert("RGBA")
-    rightShoulder = nakedKongImage.crop((270, 354, 291, 368)).convert("RGBA")
+    cropped = naked_kong_image.crop((0, 360, 374, 512)).convert("RGBA")
+    left_shoulder = naked_kong_image.crop((0, 310, 184, 385)).convert("RGBA")
+    right_shoulder = naked_kong_image.crop((270, 354, 291, 368)).convert("RGBA")
 
-    kongImage = Util.fetch_image(kongAssets["image_url"])
-    kongImage.paste(cropped, (0, 360), mask=cropped)
-    kongImage.paste(leftShoulder, (0, 310), mask=leftShoulder)
-    kongImage.paste(rightShoulder, (270, 354), mask=rightShoulder)
+    kong_image = Util.fetch_image(kong_assets["image_url"])
+    kong_image.paste(cropped, (0, 360), mask=cropped)
+    kong_image.paste(left_shoulder, (0, 310), mask=left_shoulder)
+    kong_image.paste(right_shoulder, (270, 354), mask=right_shoulder)
 
-    return kongImage
+    return kong_image
 
 
-def apply_drip(kongImage, dripType, isJersey=False):
-    dripImageUrl = Globals.DRIP_PATH + Globals.DRIP[dripType]
+def apply_drip(kong_image, dripType, isJersey=False):
+    drip_image_url = Globals.DRIP_PATH + Globals.DRIP[dripType]
     if isJersey == True:
-        dripImageUrl = Globals.JERSEYS_PATH + Globals.DRIP[dripType]
-    dripImage = Image.open(dripImageUrl).resize((512, 512))
-    kongImage.paste(dripImage, (0, 0), mask=dripImage)
+        drip_image_url = Globals.JERSEYS_PATH + Globals.DRIP[dripType]
+    drip_image = Image.open(drip_image_url).resize((512, 512))
+    kong_image.paste(drip_image, (0, 0), mask=drip_image)
 
-    return kongImage
+    return kong_image

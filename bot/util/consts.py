@@ -2,7 +2,7 @@ from os import getenv
 from dotenv import load_dotenv
 
 LOG_FILE = ""
-def setLogFile(path):
+def set_log_file(path):
     global LOG_FILE
     LOG_FILE = path
 
