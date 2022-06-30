@@ -3,17 +3,17 @@ from util import Globals, Util, OpenSeaUtil
 
 
 def replace_pixels(data, fromRGB, toRGB):
-    newData = []
+    new_data = []
     for item in data:
         if (
             abs(item[0] - int(fromRGB[0])) < 20
             and abs(item[1] - int(fromRGB[1])) < 20
             and abs(item[2] - int(fromRGB[2])) < 20
         ):
-            newData.append(tuple(toRGB))
+            new_data.append(tuple(toRGB))
         else:
-            newData.append(item)
-    return newData
+            new_data.append(item)
+    return new_data
 
 
 def draw_nakes_kong(kongId):

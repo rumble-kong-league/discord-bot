@@ -137,18 +137,18 @@ def get_naked_kong(kong_id):
 
     datas = naked_kong.getdata()
 
-    newData = []
+    new_data = []
     for item in datas:
         if (
             abs(item[0] - background[0]) < 20
             and abs(item[1] - background[1]) < 20
             and abs(item[2] - background[2]) < 20
         ):
-            newData.append(background_color[kong_background_color])
+            new_data.append(background_color[kong_background_color])
         else:
-            newData.append(item)
+            new_data.append(item)
 
-    naked_kong.putdata(newData)
+    naked_kong.putdata(new_data)
 
     if fur in ("Hyper Cat", "Zebra"):
         im_crop = naked_kong.crop((0, 360, 374, 512))
@@ -163,7 +163,6 @@ def get_naked_kong(kong_id):
         kong = Image.open(BytesIO(response.content))
         r, g, b = kong.getpixel((1, 1))
 
-        print(r, g, b)
         kong.paste(im_crop, (0, 360), mask=im_crop)
         kong.paste(left_shoulder, (0, 310), mask=left_shoulder)
         kong.paste(right_shoulder, (270, 354), mask=right_shoulder)
@@ -181,7 +180,6 @@ def get_naked_kong(kong_id):
         kong = Image.open(BytesIO(response.content))
         r, g, b = kong.getpixel((1, 1))
 
-        print(r, g, b)
         kong.paste(im_crop, (0, 360), mask=im_crop)
         kong.paste(left_shoulder, (0, 310), mask=left_shoulder)
         kong.paste(right_shoulder, (270, 354), mask=right_shoulder)
@@ -198,8 +196,8 @@ bot = commands.Bot(command_prefix="!", case_insensitive=True)
     brief="Sends back the current floor for RKL Kongs or Sneakers.",
 )
 async def floor(ctx, *args):
-    print(type(DISCORD_GENERAL_CHANNEL_ID))
-    print(type(ctx.channel.id))
+    # print(type(DISCORD_GENERAL_CHANNEL_ID))
+    # print(type(ctx.channel.id))
     if 873956958485491772 != ctx.channel.id:
         await ctx.channel.send("Please check the floor in <#873956958485491772>")
     else:
@@ -1110,7 +1108,6 @@ async def vote(ctx, *args):
                 datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
             ]
         ]
-        print(rows)
         service = build("sheets", "v4", credentials=credentials)
         service.spreadsheets().values().append(
             spreadsheetId=spreadsheet_id,
