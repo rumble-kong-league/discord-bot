@@ -2,7 +2,9 @@ from sys import maxsize
 from time import time, sleep
 from discord import Embed, Color
 from requests import request
-from util import consts, util
+
+import bot.src.consts as consts
+import bot.src.util as util
 
 
 def construct_headers():

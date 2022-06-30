@@ -2,9 +2,9 @@ from requests import get
 from io import BytesIO
 from PIL import Image
 from datetime import datetime
-from google.oauth2.service_account import Credentials
 import json
-from util import consts
+
+import bot.src.consts as consts
 
 
 def get_formatted_datetime(as_path=False):
@@ -17,18 +17,14 @@ def get_formatted_datetime(as_path=False):
 def initialize_log():
     name = get_formatted_datetime(as_path=True) + ".txt"
     path = consts.LOG_PATH + name
-    open(path, "w").close()
+    open(path, "w+").close()
     consts.set_log_file(name)
     return path
 
 
 def log(text, depth=0):
     msg = "[" + get_formatted_datetime() + "] " + ("--> " * depth) + text
-    if consts.LOG:
-        with open(consts.LOG_PATH + consts.LOG_FILE, "a") as f:
-            f.write(msg + "\n")
-    if consts.DEBUG:
-        print(msg)
+    print(msg)
 
 
 def read_json(path):
@@ -54,9 +50,3 @@ def fetch_image(url, size=None):
 
 def from_wei(wei, precision=2):
     return round((int(wei) / 1000000000000000000), precision)
-
-
-def read_service_account_credentials(path):
-    return Credentials.from_service_account_file(
-        path, scopes=["https://www.googleapis.com/auth/spreadsheets"]
-    )

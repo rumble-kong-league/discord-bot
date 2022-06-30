@@ -1,12 +1,7 @@
-from os import getenv
+import os
 from dotenv import load_dotenv
 
-LOG_FILE = ""
-
-
-def set_log_file(path):
-    global LOG_FILE
-    LOG_FILE = path
+load_dotenv()
 
 
 DEFAULT_REST_TIME = 180
@@ -14,24 +9,19 @@ DEFAULT_MAX_ATTEMPTS = 3
 
 CACHE_UPDATE_RATE = 600
 
-LOG_PATH = "../.log/"
-CACHE_PATH = "../cache/"
-ASSETS_PATH = "../assets/"
-TMP_PATH = ASSETS_PATH + ".tmp/"
-DRIP_PATH = ASSETS_PATH + "drip/"
-JERSEYS_PATH = DRIP_PATH + "jerseys/"
-MEMES_PATH = ASSETS_PATH + "memes/"
-STAFF_PATH = ASSETS_PATH + "staff/"
+SRC_PATH = os.path.dirname(os.path.abspath(__file__)) # ../src
+BOT_PATH = os.path.dirname(SRC_PATH)
+LOG_PATH = BOT_PATH # ../bot
+CACHE_PATH = os.path.join(BOT_PATH, "cache") # ../discord-bot/cache
+ASSETS_PATH = os.path.join(BOT_PATH, "assets")
+TMP_PATH = os.path.join(ASSETS_PATH, "tmp")
+DRIP_PATH = os.path.join(ASSETS_PATH, "drip")
+JERSEYS_PATH = os.path.join(DRIP_PATH, "jerseys")
+MEMES_PATH = os.path.join(ASSETS_PATH, "memes")
+STAFF_PATH = os.path.join(ASSETS_PATH, "staff")
 
-load_dotenv()
-
-DISCORD_TOKEN = getenv("DISCORD_TOKEN")
-DISCORD_GENERAL_CHANNEL_ID = int(getenv("DISCORD_GENERAL_CHANNEL_ID"))
-OPENSEA_API_KEY = getenv("OPENSEA_API_KEY")
-SERVICE_ACCOUNT_KEY_FILE = getenv("SERVICE_ACCOUNT_KEY_FILE")
-VOTING_SPREADSHEET_ID = getenv("VOTING_SPREADSHEET_ID")
-LOG = getenv("LOG") == str(1)
-DEBUG = getenv("DEBUG") == str(1)
+DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
+OPENSEA_API_KEY = os.environ["OPENSEA_API_KEY"]
 
 OPENSEA_API_BASE_URL = "https://api.opensea.io/api/v1"
 OPENSEA_ASSETS_URL = OPENSEA_API_BASE_URL + "/assets"
@@ -67,20 +57,21 @@ COLLECTIONS = {
 
 STAFF = {
     "team": "team.gif",
-    "nastynaz": "nastynaz.gif",
-    "nasty": "nastynaz.gif",
+    "naztynaz": "nastynaz.gif",
+    "nazty": "nastynaz.gif",
     "naz": "nastynaz.gif",
     "nickev": "nickev.gif",
     "direkkt": "direkkt.gif",
     "goodpencil": "goodpencil.gif",
     "sickpencil": "goodpencil.gif",
-    "kongtracker": "kongtracker.gif",
     "steph": "steph.gif",
 }
 
+# TODO: drip and teams dicts are useless. Just use the arg passed in the bot command
+# TODO: and add .png to the end. If the file does not exist, just don't do anything
 DRIP = {
     "hoodie": "hoodie.png",
-    "virgil": "virgil_teeshirt.png",
+    "virgil": "virgil.png",
     "pinksuit": "pinksuit.png",
 }
 
@@ -94,6 +85,7 @@ TEAMS = {
     "kamikazes": "kamikazes.png",
     "versace": "versace.png",
     "sac": "sac.png",
+    "swagz": "swagz.png",
     "kongvictz": "kongvictz.png",
     "hooperz": "hooperz.png",
     "badboyz": "badboyz.png",
