@@ -8,16 +8,9 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 discord = "1.7.3"
-numpy = "1.19.5"
-pandas = "1.2.4"
 python-dotenv = "0.19"
 Pillow = "8.4.0"
 requests = "2.24.0"
-google-api-python-client = "2.33.0"
-google-auth-httplib2 = "0.1.0"
-google-auth-oauthlib = "0.4.6"
-s3fs = "^2022.5.0"
-fsspec = "^2022.5.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"

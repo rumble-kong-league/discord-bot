@@ -19,6 +19,6 @@ if __name__ == "__main__":
 
     initialize_bot()
 
-        # while True:
-        #    opensea.update_asset_cache(collection)
-        #    sleep(consts.CACHE_UPDATE_RATE)
+    # while True:
+    #    opensea.update_asset_cache(collection)
+    #    sleep(consts.CACHE_UPDATE_RATE)
