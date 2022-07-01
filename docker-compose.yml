@@ -11,8 +11,6 @@ services:
     # to avoid issues on Mac
     ports:
       - "5050"
-    volumes:
-      - $PWD:/bot
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
