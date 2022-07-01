@@ -2,15 +2,16 @@ from os.path import exists
 import discord
 from discord.ext import commands
 from googleapiclient.discovery import build
-from util import globals_util, util, opensea_util, kong_util
+from util import consts as globals_util, util, opensea, kong as kong_util
 from time import time, sleep
 
 
 def initialize_bot():
-    Util.log("Initializing Discord bot with token: " + Globals.DISCORD_TOKEN)
+    util.log("Initializing Discord bot with token: " +
+             globals_util.DISCORD_TOKEN)
     bot = commands.Bot(command_prefix="!", case_insensitive=True)
     register_commands(bot)
-    bot.run(Globals.DISCORD_TOKEN)
+    bot.run(globals_util.DISCORD_TOKEN)
     return bot
 
 
@@ -23,7 +24,7 @@ def register_commands(bot):
         brief="I am Kong!"
     )
     async def iamkong(ctx, *_args):
-        gif = discord.File(Globals.MEMES_PATH + "iamkong.gif")
+        gif = discord.File(globals_util.MEMES_PATH + "iamkong.gif")
         await ctx.channel.send(file=gif)
 
     # == !Yes =========================================================================
@@ -32,7 +33,7 @@ def register_commands(bot):
         brief="Yes."
     )
     async def yes(ctx, *_args):
-        image = discord.File(Globals.MEMES_PATH + "yes.png")
+        image = discord.File(globals_util.MEMES_PATH + "yes.png")
         await ctx.channel.send(file=image)
 
     # == !Praise =======================================================================
@@ -42,10 +43,10 @@ def register_commands(bot):
     )
     async def praise(ctx, *args):
         name = args[0]
-        if name not in Globals.STAFF:
+        if name not in globals_util.STAFF:
             name = "team"
 
-        gif = Globals.STAFF_PATH + Globals.STAFF[name]
+        gif = globals_util.STAFF_PATH + globals_util.STAFF[name]
         await ctx.channel.send(file=discord.File(gif))
 
     # == !Image =========================================================================
@@ -56,18 +57,18 @@ def register_commands(bot):
     async def image(ctx, *args):
         id = args[0]
 
-        imageString = "image_url"
+        image_string = "image_url"
         if len(args) > 1:
             if args[1] == "hd":
-                imageString = "image_original_url"
+                image_string = "image_original_url"
 
         params = {
             "token_ids": id,
             "collection_slug": "rumble-kong-league"
         }
-        kongUrl = OpenSeaUtil.fetch_opensea_asset(Globals.OPENSEA_ASSETS_URL, params)[
-            "assets"][0][imageString]
-        await ctx.channel.send(str(kongUrl))
+        kong_url = opensea.fetch_opensea_asset(globals_util.OPENSEA_ASSETS_URL, params)[
+            "assets"][0][image_string]
+        await ctx.channel.send(str(kong_url))
 
     # == !Jersey ===========================================================================
     @bot.command(
@@ -76,13 +77,13 @@ def register_commands(bot):
     )
     async def jersey(ctx, *args):
         id = args[0]
-        teamJersey = args[1]
+        team_jersey = args[1]
 
-        kong = KongUtil.draw_nakes_kong(int(id))
-        jerseyKong = KongUtil.apply_drip(kong, teamJersey, True)
-        jerseyKong.save(Globals.TMP_PATH + "testkong.png")
+        kong = kong_util.draw_nakes_kong(int(id))
+        jersey_kong = kong_util.apply_drip(kong, team_jersey, True)
+        jersey_kong.save(globals_util.TMP_PATH + "testkong.png")
 
-        image = discord.File(Globals.TMP_PATH + "testkong.png")
+        image = discord.File(globals_util.TMP_PATH + "testkong.png")
         await ctx.channel.send(file=image)
 
     # == !Drip =============================================================================
@@ -92,13 +93,13 @@ def register_commands(bot):
     )
     async def drip(ctx, *args):
         id = args[0]
-        dripType = args[1]
+        drip_type = args[1]
 
-        kong = KongUtil.draw_nakes_kong(int(id))
-        drippedKong = KongUtil.apply_drip(kong, dripType, False)
-        drippedKong.save(Globals.TMP_PATH + "testkong.png")
+        kong = kong_util.draw_nakes_kong(int(id))
+        dripped_kong = kong_util.apply_drip(kong, drip_type, False)
+        dripped_kong.save(globals_util.TMP_PATH + "testkong.png")
 
-        image = discord.File(Globals.TMP_PATH + "testkong.png")
+        image = discord.File(globals_util.TMP_PATH + "testkong.png")
         await ctx.channel.send(file=image)
 
     # == !Vote =============================================================================
@@ -111,15 +112,15 @@ def register_commands(bot):
             ctx.message.author.name,
             ctx.message.author.id,
             ctx.message.content,
-            Util.get_formatted_datetime(),
+            util.get_formatted_datetime(),
         ]
 
-        credentials = Util.read_service_account_credentials(
-            Globals.SERVICE_ACCOUNT_KEY_FILE)
+        credentials = util.read_service_account_credentials(
+            globals_util.SERVICE_ACCOUNT_KEY_FILE)
         service = build("sheets", "v4", credentials=credentials)
 
         service.spreadsheets().values().append(
-            spreadsheetId=Globals.VOTING_SPREADSHEET_ID,
+            spreadsheetId=globals_util.VOTING_SPREADSHEET_ID,
             range="Sheet1!A:Z",
             body={"majorDimension": "ROWS", "values": [rows]},
             valueInputOption="USER_ENTERED",
@@ -140,26 +141,26 @@ def register_commands(bot):
         if collection == "sneakers":
             filter = "Sneakers"
 
-        listings = Util.read_json(
-            Globals.CACHE_PATH + collection + "-asset-cache.json")["assets"]
-        embed = OpenSeaUtil.construct_floor_stats_embed(
+        listings = util.read_json(
+            globals_util.CACHE_PATH + collection + "-asset-cache.json")["assets"]
+        embed = opensea.construct_floor_stats_embed(
             collection, listings, filter)
         await ctx.channel.send(embed=embed)
 
 
 if __name__ == "__main__":
 
-    if Globals.LOG:
-        Util.initialize_log()
+    if globals_util.LOG:
+        util.initialize_log()
 
     success = True
-    for collection in Globals.COLLECTIONS:
-        if exists(Globals.CACHE_PATH + collection + "-asset-cache.json"):
-            Util.log("Skipping caching assets for " +
+    for collection in globals_util.COLLECTIONS:
+        if exists(globals_util.CACHE_PATH + collection + "-asset-cache.json"):
+            util.log("Skipping caching assets for " +
                      collection + " because file already exists")
 
         else:
-            success = OpenSeaUtil.initialize_asset_cache(collection)
+            success = opensea.initialize_asset_cache(collection)
             if success == False:
                 break
 
@@ -168,4 +169,4 @@ if __name__ == "__main__":
 
         # while True:
         #    OpenSeaUtil.update_asset_cache(collection)
-        #    sleep(Globals.CACHE_UPDATE_RATE)
+        #    sleep(globals_util.CACHE_UPDATE_RATE)
