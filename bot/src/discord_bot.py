@@ -34,6 +34,18 @@ def register_commands(bot):
     async def rumble(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "rumble.gif")))
 
+    @bot.command(help="We are Kong.", brief="We are Kong.")
+    async def wearekong(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "wearekong.gif")))
+
+    @bot.command(help="Alpha alert.", brief="Alpha alert.")
+    async def wearekong(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "alpha.gif")))
+
+    @bot.command(help="Tacpeo.", brief="Tacpeo.")
+    async def tacpeo(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "tacpeo.gif")))
+
     @bot.command(
         help="Give thanks to the RKL team members.",
         brief="name (string): Name of the team member to praise",
