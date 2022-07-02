@@ -39,7 +39,7 @@ def register_commands(bot):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "wearekong.gif")))
 
     @bot.command(help="Alpha alert.", brief="Alpha alert.")
-    async def wearekong(ctx, *_args):
+    async def alpha(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "alpha.gif")))
 
     @bot.command(help="Tacpeo.", brief="Tacpeo.")
