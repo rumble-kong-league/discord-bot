@@ -3,6 +3,8 @@ import os
 import discord
 from discord.ext import commands
 from io import BytesIO
+from jokeapi import Jokes
+import time
 # from time import time, sleep
 
 import bot.src.consts as consts
@@ -108,6 +110,17 @@ def register_commands(bot):
         #     dripped_kong.save(image_binary, "PNG")
         #     image_binary.seek(0)
         #     await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))
+
+    @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
+    async def joke(ctx, *args):
+        j = await Jokes()
+        joke = await j.get_joke(blacklist=["racist", "religious", "political", "dark", "nsfw", "sexist", "explicit"])
+        if joke["type"] == "single": # Print the joke
+            await ctx.channel.send(str(joke["joke"]))
+        else:
+            await ctx.channel.send(str(joke["setup"]))
+            time.sleep(3)
+            await ctx.channel.send(str(joke["delivery"]))
 
     # TODO:
     # == !Floor ============================================================================

@@ -10,7 +10,8 @@ python = "^3.10"
 discord = "1.7.3"
 python-dotenv = "0.19"
 Pillow = "8.4.0"
-requests = "2.24.0"
+requests = "^2.28.1"
+jokeapi = "^1.0.5"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
