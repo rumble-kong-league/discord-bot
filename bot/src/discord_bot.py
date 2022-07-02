@@ -137,10 +137,11 @@ def register_commands(bot):
             gotcha_ix = randint(0, len(gotcha) - 1)
 
             await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
-            time.sleep(2)
+            time.sleep(3)
             await ctx.channel.send(f"{gotcha[gotcha_ix]}")
 
             trip_up_count -= 1
+        time.sleep(1)
 
         winner = randint(0, args_len - 1)
         await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
