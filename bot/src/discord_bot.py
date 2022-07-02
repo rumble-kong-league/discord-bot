@@ -5,6 +5,7 @@ from discord.ext import commands
 from io import BytesIO
 from jokeapi import Jokes
 import time
+from random import randint
 # from time import time, sleep
 
 import bot.src.consts as consts
@@ -121,6 +122,28 @@ def register_commands(bot):
             await ctx.channel.send(str(joke["setup"]))
             time.sleep(3)
             await ctx.channel.send(str(joke["delivery"]))
+
+    @bot.command(help="Random selector.", brief="Randomly selects from a set.")
+    async def pick(ctx, *args):
+        pick_phrases = ["I pick", "And the winner is", "Fabulous performance", "WAGMI"]
+        gotcha = ["jk lol", "he he, actually no", "got ya, not really", "nope lol, just messing with you"]
+
+        trip_up_count = randint(1, 4)
+        args_len = len(args)
+
+        while trip_up_count > 0:
+            winner = randint(0, args_len - 1)
+            phrase_ix = randint(0, len(pick_phrases) - 1)
+            gotcha_ix = randint(0, len(gotcha) - 1)
+
+            await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
+            time.sleep(2)
+            await ctx.channel.send(f"{gotcha[gotcha_ix]}")
+
+            trip_up_count -= 1
+
+        winner = randint(0, args_len - 1)
+        await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
 
     # TODO:
     # == !Floor ============================================================================
