@@ -114,7 +114,7 @@ def register_commands(bot):
     @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     async def joke(ctx, *args):
         j = await Jokes()
-        joke = await j.get_joke(blacklist=["racist", "religious", "political", "nsfw", "sexist", "explicit"])
+        joke = await j.get_joke(blacklist=["racist", "religious", "political", "sexist"]) #, "nsfw",  "explicit"])
         if joke["type"] == "single": # Print the joke
             await ctx.channel.send(str(joke["joke"]))
         else:
