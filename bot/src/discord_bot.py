@@ -30,6 +30,10 @@ def register_commands(bot):
     async def yes(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "yes.png")))
 
+    @bot.command(help="Ready to Rumble.", brief="Ready to Rumble.")
+    async def rumble(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "rumble.gif")))
+
     @bot.command(
         help="Give thanks to the RKL team members.",
         brief="name (string): Name of the team member to praise",

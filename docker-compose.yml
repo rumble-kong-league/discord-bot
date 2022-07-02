@@ -23,7 +23,6 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - "$HOME/.docker/config.json:/config.json:ro"
     ports:
       - "8080:8080"
     restart: always
