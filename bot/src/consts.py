@@ -65,6 +65,9 @@ STAFF = {
     "goodpencil": "goodpencil.gif",
     "sickpencil": "goodpencil.gif",
     "steph": "steph.gif",
+    "vapour": "vapour.gif",
+    "apeantics": "apeantics.gif",
+    "jandc": "jandc.gif"
 }
 
 # TODO: drip and teams dicts are useless. Just use the arg passed in the bot command
