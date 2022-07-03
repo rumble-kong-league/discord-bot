@@ -44,6 +44,10 @@ def register_commands(bot):
     async def lfg(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
 
+    @bot.command(help="Let's fucking go!", brief="LFG!")
+    async def lookingforgroup(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
+
     @bot.command(help="Good Morning!", brief="Good Morning!")
     async def gm(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gm.gif")))
