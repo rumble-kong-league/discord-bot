@@ -24,7 +24,7 @@ async def send_image_binary(ctx, img):
     with BytesIO() as image_binary:
         img.save(image_binary, "PNG")
         image_binary.seek(0)
-        await ctx.channel.send(file=discord.File(fp=img, filename="tacpeo.png"))    
+        await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))    
 
 
 # TODO: remove these commands from here, they do not belong here
@@ -104,7 +104,7 @@ def register_commands(bot):
     async def jersey(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
         jersey_kong = kong_util.apply_drip(kong, args[1], True)
-        send_image_binary(ctx, jersey_kong)
+        await send_image_binary(ctx, jersey_kong)
         # with BytesIO() as image_binary:
         #     jersey_kong.save(image_binary, "PNG")
         #     image_binary.seek(0)
@@ -118,7 +118,7 @@ def register_commands(bot):
     async def drip(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
         dripped_kong = kong_util.apply_drip(kong, args[1], False)
-        send_image_binary(ctx, dripped_kong)
+        await send_image_binary(ctx, dripped_kong)
         # with BytesIO() as image_binary:
         #     dripped_kong.save(image_binary, "PNG")
         #     image_binary.seek(0)
