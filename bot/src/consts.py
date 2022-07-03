@@ -61,6 +61,7 @@ STAFF = {
     "nazty": "nastynaz.gif",
     "naz": "nastynaz.gif",
     "nickev": "nickev.gif",
+    "nick": "nickev.gif",
     "direkkt": "direkkt.gif",
     "goodpencil": "goodpencil.gif",
     "sickpencil": "goodpencil.gif",
