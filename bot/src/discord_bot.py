@@ -33,7 +33,7 @@ async def send_image_binary(ctx, img):
 def register_commands(bot):
 
     @bot.command(help="On your head!", brief="OYH!")
-    async def lfg(ctx, *_args):
+    async def oyh(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif")))
 
     @bot.command(help="Let's fucking go!", brief="LFG!")
