@@ -109,10 +109,6 @@ def register_commands(bot):
         kong = kong_util.draw_naked_kong(int(args[0]))
         jersey_kong = kong_util.apply_drip(kong, args[1], True)
         await send_image_binary(ctx, jersey_kong)
-        # with BytesIO() as image_binary:
-        #     jersey_kong.save(image_binary, "PNG")
-        #     image_binary.seek(0)
-        #     await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))
 
     @bot.command(
         help="Add some drip to your Kong.",
@@ -123,10 +119,6 @@ def register_commands(bot):
         kong = kong_util.draw_naked_kong(int(args[0]))
         dripped_kong = kong_util.apply_drip(kong, args[1], False)
         await send_image_binary(ctx, dripped_kong)
-        # with BytesIO() as image_binary:
-        #     dripped_kong.save(image_binary, "PNG")
-        #     image_binary.seek(0)
-        #     await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))
 
     @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     async def joke(ctx, *args):
