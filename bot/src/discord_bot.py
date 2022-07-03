@@ -32,6 +32,10 @@ async def send_image_binary(ctx, img):
 # Include chat commands within this function to ensure they are registered on startup
 def register_commands(bot):
 
+    @bot.command(help="Sweep!", brief="Sweep!")
+    async def sweep(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "sweep.gif")))
+
     @bot.command(help="On your head!", brief="OYH!")
     async def oyh(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif")))
