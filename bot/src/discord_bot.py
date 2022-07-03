@@ -120,16 +120,16 @@ def register_commands(bot):
         dripped_kong = kong_util.apply_drip(kong, args[1], False)
         await send_image_binary(ctx, dripped_kong)
 
-    @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
-    async def joke(ctx, *args):
-        j = await Jokes()
-        joke = await j.get_joke(blacklist=["racist", "religious", "political", "sexist", "nsfw",  "explicit"])
-        if joke["type"] == "single": # Print the joke
-            await ctx.channel.send(str(joke["joke"]))
-        else:
-            await ctx.channel.send(str(joke["setup"]))
-            time.sleep(3)
-            await ctx.channel.send(str(joke["delivery"]))
+    # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
+    # async def joke(ctx, *args):
+    #     j = await Jokes()
+    #     joke = await j.get_joke(blacklist=["racist", "religious", "political", "sexist", "nsfw",  "explicit"])
+    #     if joke["type"] == "single": # Print the joke
+    #         await ctx.channel.send(str(joke["joke"]))
+    #     else:
+    #         await ctx.channel.send(str(joke["setup"]))
+    #         time.sleep(3)
+    #         await ctx.channel.send(str(joke["delivery"]))
 
     @bot.command(help="Random selector.", brief="Randomly selects from a set.")
     async def pick(ctx, *args):
