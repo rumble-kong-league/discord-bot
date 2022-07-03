@@ -32,6 +32,14 @@ async def send_image_binary(ctx, img):
 # Include chat commands within this function to ensure they are registered on startup
 def register_commands(bot):
 
+    @bot.command(help="Let's fucking go!", brief="LFG!")
+    async def lfg(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
+
+    @bot.command(help="Good Morning!", brief="Good Morning!")
+    async def gm(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gm.gif")))
+
     @bot.command(help="I am Kong!", brief="I am Kong!")
     async def iamkong(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "iamkong.gif")))
