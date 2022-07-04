@@ -79,7 +79,8 @@ DRIP = {
     "virgil": "virgil.png",
     "pinksuit": "pinksuit.png",
     "blacksuit": "blacksuit.png",
-    "usa": "usa.png"
+    "usa": "usa.png",
+    "boostgang": "boostgang.png"
 }
 
 TEAMS = {
