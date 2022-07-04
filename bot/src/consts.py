@@ -87,7 +87,8 @@ DRIP = {
     "r21rkl": "r21rkl.png",
     "raregang": "raregang.png",
     "sppuffer": "sppuffer.png",
-    "suave": "suave.png"
+    "suave": "suave.png",
+    "spnyc": "spnyc.png"
 }
 
 TEAMS = {
