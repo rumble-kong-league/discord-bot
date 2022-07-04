@@ -52,6 +52,14 @@ def register_commands(bot):
     async def gm(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gm.gif")))
 
+    @bot.command(help="Good Night!", brief="Good Night!")
+    async def gn(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gn.gif")))
+
+    @bot.command(help="There is no ceiling!", brief="No ceiling!")
+    async def ceiling(ctx, *_args):
+        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "ceiling.gif")))
+
     @bot.command(help="I am Kong!", brief="I am Kong!")
     async def iamkong(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "iamkong.gif")))
