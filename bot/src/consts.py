@@ -88,7 +88,8 @@ DRIP = {
     "raregang": "raregang.png",
     "sppuffer": "sppuffer.png",
     "suave": "suave.png",
-    "spnyc": "spnyc.png"
+    "spnyc": "spnyc.png",
+    "pennyjar": "pennyjar.png"
 }
 
 TEAMS = {

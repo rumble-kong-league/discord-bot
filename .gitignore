@@ -129,3 +129,4 @@ test.py
 *.txt
 *.ipynb
 playground.py
+*.csv
