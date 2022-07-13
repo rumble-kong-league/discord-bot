@@ -36,9 +36,11 @@ def draw_naked_kong(kong_id):
             background_color = consts.NAKED_KONG_EXAMPLE_BACKGROUNDS[asset["value"]]
 
     params = {"token_ids": kong_base["Fur"], "collection_slug": "rumble-kong-league"}
-    naked_kong_image_url = opensea.fetch_opensea_asset(
-        consts.OPENSEA_ASSETS_URL, params
-    )["assets"][0]["image_url"]
+    # ! remove the below
+    # naked_kong_image_url = opensea.fetch_opensea_asset(
+    #     consts.OPENSEA_ASSETS_URL, params
+    # )["assets"][0]["image_url"]
+    naked_kong_image_url = kong_assets["image_url"]
     naked_kong_image = util.fetch_image(naked_kong_image_url, (512, 512))
 
     replaced_background = replace_pixels(

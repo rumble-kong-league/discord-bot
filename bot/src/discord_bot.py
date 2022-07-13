@@ -6,11 +6,23 @@ from io import BytesIO
 from jokeapi import Jokes
 import time
 from random import randint
+import json
+import base64
+import os
 
 import bot.src.consts as consts
 import bot.src.util as util
 import bot.src.opensea as opensea
 import bot.src.kong as kong_util
+
+
+
+KONG_ASSET_OPENSEA_URL = "https://opensea.io/assets/ethereum/0xef0182dc0574cd5874494a120750fd222fdb909a/"
+
+ASSETS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
+KONGS_PATH = os.path.join(ASSETS_PATH, "kongs")
+META_PATH = os.path.join(ASSETS_PATH, "meta.json")
+META = json.loads(open(META_PATH).read())
 
 
 def initialize_bot():
@@ -125,6 +137,51 @@ def register_commands(bot):
         kong = kong_util.draw_naked_kong(int(args[0]))
         dripped_kong = kong_util.apply_drip(kong, str(args[1]).lower(), False)
         await send_image_binary(ctx, dripped_kong)
+
+    @bot.command(
+        help=("$rank <kong token id>"),
+        brief="Gives you (i) visual, (ii) boost and (iii) total rank of your kong."
+    )
+    async def rank(ctx, *args):
+
+        kong_token_id = int(args[0])
+        kong_image_path = os.path.join(KONGS_PATH, f"{kong_token_id}.jpg")
+        kong_image = ""
+        with open(kong_image_path, "rb") as image_file:
+            kong_image = base64.b64encode(image_file.read())
+
+        discord_message = discord.Embed(
+            title=f"Kong #{kong_token_id} Rarity Card",
+            # description=f"Price: {data.price_eth()} {data.payment_symbol}, (${data.price_usd():.2f})",
+            url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
+        )
+
+        discord_message.set_thumbnail(url=kong_image)
+        # discord_message.add_field(
+        #     name="Boost Total", value=data.boosts["cumulative"], inline=True
+        # )
+        # discord_message.add_field(
+        #     name="Boost Total Rank", value=
+        # )
+
+        # discord_message.add_field(name="Defense", value=data.boosts["defense"], inline=True)
+        # discord_message.add_field(name="Finish", value=data.boosts["finish"], inline=True)
+        # discord_message.add_field(
+        #     name="Shooting", value=data.boosts["shooting"], inline=True
+        # )
+        # discord_message.add_field(name="Vision", value=data.boosts["vision"], inline=True)
+        # discord_message.add_field(
+        #     name="Seller",
+        #     value=f"[{data.seller}](https://opensea.io/{data.seller_address})",
+        #     inline=False,
+        # )
+        # discord_message.add_field(
+        #     name="Buyer",
+        #     value=f"[{data.buyer}](https://opensea.io/{data.buyer_address})",
+        #     inline=True,
+        # )
+
+        return discord_message
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):
