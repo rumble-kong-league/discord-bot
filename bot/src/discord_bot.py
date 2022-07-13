@@ -29,19 +29,19 @@ async def send_image_binary(ctx, img):
 # Include chat commands within this function to ensure they are registered on startup
 def register_commands(bot):
 
-    @bot.command(help="Sweep!", brief="Sweep!")
+    @bot.command(help="Sweep those thin floors! fr fr", brief="Sweep those thin floors! fr fr")
     async def sweep(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "sweep.gif")))
 
-    @bot.command(help="On your head!", brief="OYH!")
+    @bot.command(help="On your head!", brief="On your head!")
     async def oyh(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif")))
 
-    @bot.command(help="Let's focking go!", brief="LFG!")
+    @bot.command(help="Let's focking go!", brief="Let's focking go!")
     async def lfg(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
 
-    @bot.command(help="Let's focking go!", brief="LFG!")
+    @bot.command(help="Looking for group!", brief="Looking for group!")
     async def lookingforgroup(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
 
@@ -53,7 +53,7 @@ def register_commands(bot):
     async def gn(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gn.gif")))
 
-    @bot.command(help="There is no ceiling!", brief="No ceiling!")
+    @bot.command(help="There is no ceiling!", brief="There is no ceiling!")
     async def ceiling(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "ceiling.gif")))
 
@@ -81,13 +81,12 @@ def register_commands(bot):
     async def tacpeo(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "tacpeo.gif")))
 
-
     @bot.command(
         help="$praise <team member name>",
         brief="Give thanks to the RKL team members.",
     )
     async def praise(ctx, *args):
-        name = args[0]
+        name = str(args[0]).lower()
         if name not in consts.STAFF:
             name = "team"
         await ctx.channel.send(
@@ -95,12 +94,12 @@ def register_commands(bot):
         )
 
     @bot.command(
-        help="$image <kong token id> [hd]: Token ID of the Kong to display",
+        help="$image <kong token id> [hd]",
         brief="Get the image of a Rumble Kong by token id.",
     )
     async def image(ctx, *args):
         image_string = "image_url"
-        if len(args) > 1 and args[1] == "hd":
+        if len(args) > 1 and str(args[1]).lower() == "hd":
             image_string = "image_original_url"
 
         params = {"token_ids": args[0], "collection_slug": "rumble-kong-league"}
@@ -115,7 +114,7 @@ def register_commands(bot):
     )
     async def jersey(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
-        jersey_kong = kong_util.apply_drip(kong, args[1], True)
+        jersey_kong = kong_util.apply_drip(kong, str(args[1]).lower(), True)
         await send_image_binary(ctx, jersey_kong)
 
     @bot.command(
@@ -124,7 +123,7 @@ def register_commands(bot):
     )
     async def drip(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
-        dripped_kong = kong_util.apply_drip(kong, args[1], False)
+        dripped_kong = kong_util.apply_drip(kong, str(args[1]).lower(), False)
         await send_image_binary(ctx, dripped_kong)
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
