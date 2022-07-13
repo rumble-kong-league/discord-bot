@@ -145,7 +145,8 @@ def register_commands(bot):
     async def rank(ctx, *args):
 
         kong_token_id = int(args[0])
-        kong_image_path = os.path.join(KONGS_PATH, f"{kong_token_id}.jpg")
+        image_name = f"{kong_token_id}.jpg"
+        kong_image_path = os.path.join(KONGS_PATH, image_name)
         kong_image = ""
         with open(kong_image_path, "rb") as image_file:
             kong_image = base64.b64encode(image_file.read())
@@ -154,9 +155,11 @@ def register_commands(bot):
             title=f"Kong #{kong_token_id} Rarity Card",
             # description=f"Price: {data.price_eth()} {data.payment_symbol}, (${data.price_usd():.2f})",
             url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
+            color=0x00ff00
         )
 
-        discord_message.set_thumbnail(url=kong_image)
+        img_file = discord.File(kong_image_path, filename=image_name)
+        discord_message.set_thumbnail(url=f"attachment://{image_name}")
         # discord_message.add_field(
         #     name="Boost Total", value=data.boosts["cumulative"], inline=True
         # )
@@ -181,7 +184,7 @@ def register_commands(bot):
         #     inline=True,
         # )
 
-        await ctx.channel.send(embed=discord_message)
+        await ctx.channel.send(file=img_file, embed=discord_message)
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):
