@@ -160,12 +160,12 @@ def register_commands(bot):
 
         img_file = discord.File(kong_image_path, filename=image_name)
         discord_message.set_thumbnail(url=f"attachment://{image_name}")
-        # discord_message.add_field(
-        #     name="Boost Total", value=data.boosts["cumulative"], inline=True
-        # )
-        # discord_message.add_field(
-        #     name="Boost Total Rank", value=
-        # )
+        discord_message.add_field(
+            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=True
+        )
+        discord_message.add_field(
+            name="Boost Total Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
+        )
 
         # discord_message.add_field(name="Defense", value=data.boosts["defense"], inline=True)
         # discord_message.add_field(name="Finish", value=data.boosts["finish"], inline=True)
