@@ -6,7 +6,6 @@ from io import BytesIO
 from jokeapi import Jokes
 import time
 from random import randint
-# from time import time, sleep
 
 import bot.src.consts as consts
 import bot.src.util as util
@@ -15,7 +14,7 @@ import bot.src.kong as kong_util
 
 
 def initialize_bot():
-    bot = commands.Bot(command_prefix="!", case_insensitive=True)
+    bot = commands.Bot(command_prefix="$", case_insensitive=True)
     register_commands(bot)
     bot.run(consts.DISCORD_TOKEN)
 
@@ -27,8 +26,6 @@ async def send_image_binary(ctx, img):
         await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))    
 
 
-# TODO: remove these commands from here, they do not belong here
-# TODO: main is purely an entrypoint
 # Include chat commands within this function to ensure they are registered on startup
 def register_commands(bot):
 
@@ -40,11 +37,11 @@ def register_commands(bot):
     async def oyh(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif")))
 
-    @bot.command(help="Let's fucking go!", brief="LFG!")
+    @bot.command(help="Let's focking go!", brief="LFG!")
     async def lfg(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
 
-    @bot.command(help="Let's fucking go!", brief="LFG!")
+    @bot.command(help="Let's focking go!", brief="LFG!")
     async def lookingforgroup(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
 
@@ -84,9 +81,10 @@ def register_commands(bot):
     async def tacpeo(ctx, *_args):
         await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "tacpeo.gif")))
 
+
     @bot.command(
-        help="Give thanks to the RKL team members.",
-        brief="name (string): Name of the team member to praise",
+        help="$praise <team member name>",
+        brief="Give thanks to the RKL team members.",
     )
     async def praise(ctx, *args):
         name = args[0]
@@ -97,8 +95,8 @@ def register_commands(bot):
         )
 
     @bot.command(
-        help="Get the image of a Rumble Kong by id.",
-        brief="id (number): Token ID of the Kong to display",
+        help="$image <kong token id> [hd]: Token ID of the Kong to display",
+        brief="Get the image of a Rumble Kong by token id.",
     )
     async def image(ctx, *args):
         image_string = "image_url"
@@ -111,11 +109,9 @@ def register_commands(bot):
         ][0][image_string]
         await ctx.channel.send(str(kong_url))
 
-    # TODO: not DRY the part where you save to binary
     @bot.command(
-        help="Rep your team's jersey on your Kong.",
-        brief=("id (number): Token ID of the Kong to display,"
-        " team (string): Name of the team to use the jersey from"),
+        help=("$jersey <kong token id> <team jersey name>"),
+        brief="Rep team's jersey on your Kong.",
     )
     async def jersey(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
@@ -123,9 +119,8 @@ def register_commands(bot):
         await send_image_binary(ctx, jersey_kong)
 
     @bot.command(
-        help="Add some drip to your Kong.",
-        brief=("id (number): Token ID of the Kong to display,"
-        " team (string): Name of the drip to apply"),
+        help=("$jersey <kong token id> <drip name>"),
+        brief="Add some drip to your Kong.",
     )
     async def drip(ctx, *args):
         kong = kong_util.draw_naked_kong(int(args[0]))
@@ -142,29 +137,6 @@ def register_commands(bot):
     #         await ctx.channel.send(str(joke["setup"]))
     #         time.sleep(3)
     #         await ctx.channel.send(str(joke["delivery"]))
-
-    @bot.command(help="Random selector.", brief="Randomly selects from a set.")
-    async def pick(ctx, *args):
-        pick_phrases = ["I pick", "And the winner is", "Fabulous performance", "WAGMI"]
-        gotcha = ["jk lol", "he he, actually no", "got ya, not really", "nope lol, just messing with you"]
-
-        trip_up_count = randint(1, 4)
-        args_len = len(args)
-
-        while trip_up_count > 0:
-            winner = randint(0, args_len - 1)
-            phrase_ix = randint(0, len(pick_phrases) - 1)
-            gotcha_ix = randint(0, len(gotcha) - 1)
-
-            await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
-            time.sleep(3)
-            await ctx.channel.send(f"{gotcha[gotcha_ix]}")
-
-            trip_up_count -= 1
-        time.sleep(1)
-
-        winner = randint(0, args_len - 1)
-        await ctx.channel.send(f"{pick_phrases[phrase_ix]} {args[winner]}")
 
     # TODO:
     # == !Floor ============================================================================
