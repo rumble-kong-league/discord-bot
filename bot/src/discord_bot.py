@@ -160,29 +160,42 @@ def register_commands(bot):
 
         img_file = discord.File(kong_image_path, filename=image_name)
         discord_message.set_thumbnail(url=f"attachment://{image_name}")
+        
+        
         discord_message.add_field(
-            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=True
+            name="Defense",
+            value=META[kong_token_id]["boosts"]["defense"],
+            inline=True
         )
         discord_message.add_field(
-            name="Boost Total Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
+            name="Finish",
+            value=META[kong_token_id]["boosts"]["finish"],
+            inline=True
+        )
+        discord_message.add_field(
+            name="Shooting",
+            value=META[kong_token_id]["boosts"]["shooting"],
+            inline=True
+        )
+        discord_message.add_field(
+            name="Vision",
+            value=META[kong_token_id]["boosts"]["vision"],
+            inline=True
         )
 
-        # discord_message.add_field(name="Defense", value=data.boosts["defense"], inline=True)
-        # discord_message.add_field(name="Finish", value=data.boosts["finish"], inline=True)
-        # discord_message.add_field(
-        #     name="Shooting", value=data.boosts["shooting"], inline=True
-        # )
-        # discord_message.add_field(name="Vision", value=data.boosts["vision"], inline=True)
-        # discord_message.add_field(
-        #     name="Seller",
-        #     value=f"[{data.seller}](https://opensea.io/{data.seller_address})",
-        #     inline=False,
-        # )
-        # discord_message.add_field(
-        #     name="Buyer",
-        #     value=f"[{data.buyer}](https://opensea.io/{data.buyer_address})",
-        #     inline=True,
-        # )
+        discord_message.add_field(
+            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
+        )
+        discord_message.add_field(
+            name="Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
+        )
+        
+        discord_message.add_field(
+            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=False
+        )
+        discord_message.add_field(
+            name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
+        )
 
         await ctx.channel.send(file=img_file, embed=discord_message)
 
