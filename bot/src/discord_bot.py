@@ -276,7 +276,7 @@ def register_commands(bot):
         kong_token_id = 0
 
         for ix, kong in enumerate(META):
-            if kong["visualRarityScore"] == total_rank_value:
+            if kong["visualRarityScore"]["rank"] == total_rank_value:
                 kong_token_id = ix
                 break
 
