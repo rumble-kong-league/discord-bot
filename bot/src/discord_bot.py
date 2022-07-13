@@ -182,16 +182,15 @@ def register_commands(bot):
             value=META[kong_token_id]["boosts"]["vision"],
             inline=True
         )
+        discord_message.add_field(
+            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=True
+        )
 
         discord_message.add_field(
-            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
+            name="Boost Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=False
         )
         discord_message.add_field(
-            name="Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
-        )
-        
-        discord_message.add_field(
-            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=False
+            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=True
         )
         discord_message.add_field(
             name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
