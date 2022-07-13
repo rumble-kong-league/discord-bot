@@ -181,7 +181,7 @@ def register_commands(bot):
         #     inline=True,
         # )
 
-        return discord_message
+        await ctx.channel.send(embed=discord_message)
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):
