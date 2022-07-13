@@ -203,7 +203,7 @@ def register_commands(bot):
         help=("$totalrank <rank number>"),
         brief="Gives you the kong whose total rank is your input."
     )
-    async def rank(ctx, *args):
+    async def totalrank(ctx, *args):
 
         total_rank_value = int(args[0])
         kong_token_id = 0
