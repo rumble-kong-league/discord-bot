@@ -243,7 +243,7 @@ def register_commands(bot):
         kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
-            if kong["boosts"]["rank"] == total_rank_value:
+            if kong["boostsRank"]["rank"] == total_rank_value:
                 kong_token_id.append(ix)
 
         for kong_id in kong_token_id:
