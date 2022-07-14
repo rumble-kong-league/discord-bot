@@ -3,21 +3,23 @@ import os
 import discord
 from discord.ext import commands
 from io import BytesIO
-from jokeapi import Jokes
-import time
-from random import randint
+# from jokeapi import Jokes
+# import time
+# from random import randint
 import json
-import base64
-import os
+# import base64
+from typing import Tuple, List
 
-import bot.src.consts as consts
-import bot.src.util as util
-import bot.src.opensea as opensea
-import bot.src.kong as kong_util
+import bot.src.consts as consts  # pylint: disable=import-error
+# import bot.src.util as util
+import bot.src.opensea as opensea  # pylint: disable=import-error
+import bot.src.kong as kong_util  # pylint: disable=import-error
 
 
 
-KONG_ASSET_OPENSEA_URL = "https://opensea.io/assets/ethereum/0xef0182dc0574cd5874494a120750fd222fdb909a/"
+KONG_ASSET_OPENSEA_URL = (
+    "https://opensea.io/assets/ethereum/0xef0182dc0574cd5874494a120750fd222fdb909a/"
+)
 
 ASSETS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
 KONGS_PATH = os.path.join(ASSETS_PATH, "kongs")

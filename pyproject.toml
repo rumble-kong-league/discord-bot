@@ -17,6 +17,8 @@ jokeapi = "^1.0.5"
 black = "^22.6.0"
 pandas = "^1.4.3"
 numpy = "^1.23.0"
+mypy = "^0.961"
+pylint = "^2.14.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
