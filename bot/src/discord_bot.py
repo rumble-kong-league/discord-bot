@@ -224,33 +224,57 @@ def register_commands(bot):
     )
     async def visualrank(ctx, *args):
 
-        total_rank_value = int(args[0])
+        rank_diff = float('inf')
+        closest_kong_token_id = -1
+        visual_rank_value = int(args[0])
         kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
-            if kong["visualRarityScore"]["rank"] == total_rank_value:
+
+            if kong["visualRarityScore"]["rank"] == visual_rank_value:
                 kong_token_id.append(ix)
 
-        for kong_id in kong_token_id:
-            img_file, discord_message = build_rarity_card(kong_id)
+            new_rank_diff = abs(kong["visualRarityScore"]["rank"] - visual_rank_value)
+            if new_rank_diff < rank_diff:
+                closest_kong_token_id = ix
+                rank_diff = new_rank_diff
+
+        if len(kong_token_id) > 0:
+            for kong_id in kong_token_id:
+                img_file, discord_message = build_rarity_card(kong_id)
+                await ctx.channel.send(file=img_file, embed=discord_message)
+        else:
+            img_file, discord_message = build_rarity_card(closest_kong_token_id)
             await ctx.channel.send(file=img_file, embed=discord_message)
 
+    # TODO: not DRY. same as above
     @bot.command(
         help=("$boostrank <rank number>"),
         brief="Gives you the kong whose boost rank is your input."
     )
     async def boostrank(ctx, *args):
 
-        total_rank_value = int(args[0])
+        rank_diff = float('inf')
+        closest_kong_token_id = -1
+        boost_rank_value = int(args[0])
         kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
-            if kong["boostsRank"]["rank"] == total_rank_value:
-                kong_token_id.append(ix)
 
-        for kong_id in kong_token_id:
-            img_file, discord_message = build_rarity_card(kong_id)
-            await ctx.channel.send(file=img_file, embed=discord_message)
+            if kong["boostsRank"]["rank"] == boost_rank_value:
+                kong_token_id.append(ix)
+            new_rank_diff = abs(kong["visualRarityScore"]["rank"] - boost_rank_value)
+            if new_rank_diff < rank_diff:
+                closest_kong_token_id = ix
+                rank_diff = new_rank_diff
+
+        if len(kong_token_id) > 0:
+            for kong_id in kong_token_id:
+                img_file, discord_message = build_rarity_card(kong_id)
+                await ctx.channel.send(file=img_file, embed=discord_message)
+        else:
+            img_file, discord_message = build_rarity_card(closest_kong_token_id)
+            await ctx.channel.send(file=img_file, embed=discord_message)          
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):
