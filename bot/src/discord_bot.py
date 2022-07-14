@@ -205,12 +205,12 @@ def register_commands(bot):
     async def totalrank(ctx, *args):
 
         total_rank_value = int(args[0])
-        kong_token_id = 0
+        rank_diff = float('inf')
+        kong_token_id = -1
 
         for ix, kong in enumerate(META):
-            if kong["totalRarityRank"] == total_rank_value:
+            if abs(kong["totalRarityRank"] - total_rank_value) < rank_diff:
                 kong_token_id = ix
-                break
 
         img_file, discord_message = build_rarity_card(kong_token_id)
 
