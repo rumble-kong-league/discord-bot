@@ -209,8 +209,10 @@ def register_commands(bot):
         kong_token_id = -1
 
         for ix, kong in enumerate(META):
-            if abs(kong["totalRarityRank"] - total_rank_value) < rank_diff:
+            new_rank_diff = abs(kong["totalRarityRank"] - total_rank_value)
+            if new_rank_diff < rank_diff:
                 kong_token_id = ix
+                rank_diff = new_rank_diff
 
         img_file, discord_message = build_rarity_card(kong_token_id)
 
