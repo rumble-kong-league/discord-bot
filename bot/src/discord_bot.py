@@ -269,7 +269,7 @@ def register_commands(bot):
                 if len(kong_token_id) == 5:
                     break
                 kong_token_id.append(ix)
-            new_rank_diff = abs(kong["visualRarityScore"]["rank"] - boost_rank_value)
+            new_rank_diff = abs(kong["boostsRank"]["rank"] - boost_rank_value)
             if new_rank_diff < rank_diff:
                 closest_kong_token_id = ix
                 rank_diff = new_rank_diff
