@@ -232,6 +232,9 @@ def register_commands(bot):
         for ix, kong in enumerate(META):
 
             if kong["visualRarityScore"]["rank"] == visual_rank_value:
+                # ! only allow up to 5 matches
+                if len(kong_token_id) == 5:
+                    break
                 kong_token_id.append(ix)
 
             new_rank_diff = abs(kong["visualRarityScore"]["rank"] - visual_rank_value)
@@ -262,6 +265,9 @@ def register_commands(bot):
         for ix, kong in enumerate(META):
 
             if kong["boostsRank"]["rank"] == boost_rank_value:
+                # ! only allow up to 5 matches
+                if len(kong_token_id) == 5:
+                    break
                 kong_token_id.append(ix)
             new_rank_diff = abs(kong["visualRarityScore"]["rank"] - boost_rank_value)
             if new_rank_diff < rank_diff:
