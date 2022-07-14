@@ -138,30 +138,18 @@ def register_commands(bot):
         dripped_kong = kong_util.apply_drip(kong, str(args[1]).lower(), False)
         await send_image_binary(ctx, dripped_kong)
 
-    @bot.command(
-        help=("$rank <kong token id>"),
-        brief="Gives you (i) visual, (ii) boost and (iii) total rank of your kong."
-    )
-    async def rank(ctx, *args):
-
-        kong_token_id = int(args[0])
+    def build_rarity_card(kong_token_id: int) -> Tuple[discord.File, discord.Embed]:
         image_name = f"{kong_token_id}.jpg"
         kong_image_path = os.path.join(KONGS_PATH, image_name)
-        kong_image = ""
-        with open(kong_image_path, "rb") as image_file:
-            kong_image = base64.b64encode(image_file.read())
+        img_file = discord.File(kong_image_path, filename=image_name)
 
         discord_message = discord.Embed(
             title=f"Kong #{kong_token_id} Rarity Card",
-            # description=f"Price: {data.price_eth()} {data.payment_symbol}, (${data.price_usd():.2f})",
             url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
             color=0x00ff00
         )
 
-        img_file = discord.File(kong_image_path, filename=image_name)
         discord_message.set_thumbnail(url=f"attachment://{image_name}")
-        
-        
         discord_message.add_field(
             name="Defense",
             value=META[kong_token_id]["boosts"]["defense"],
@@ -185,7 +173,6 @@ def register_commands(bot):
         discord_message.add_field(
             name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
         )
-
         discord_message.add_field(
             name="Boost Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
         )
@@ -196,9 +183,19 @@ def register_commands(bot):
             name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
         )
 
+        return img_file, discord_message
+
+    @bot.command(
+        help=("$rank <kong token id>"),
+        brief="Gives you (i) visual, (ii) boost and (iii) total rank of your kong."
+    )
+    async def rank(ctx, *args):
+
+        kong_token_id = int(args[0])
+        img_file, discord_message = build_rarity_card(kong_token_id)
+
         await ctx.channel.send(file=img_file, embed=discord_message)
 
-    # TODO: not DRY (above is the same code pretty much)
     @bot.command(
         help=("$totalrank <rank number>"),
         brief="Gives you the kong whose total rank is your input."
@@ -213,59 +210,10 @@ def register_commands(bot):
                 kong_token_id = ix
                 break
 
-        image_name = f"{kong_token_id}.jpg"
-        kong_image_path = os.path.join(KONGS_PATH, image_name)
-        kong_image = ""
-        with open(kong_image_path, "rb") as image_file:
-            kong_image = base64.b64encode(image_file.read())
-
-        discord_message = discord.Embed(
-            title=f"Kong #{kong_token_id} Rarity Card",
-            # description=f"Price: {data.price_eth()} {data.payment_symbol}, (${data.price_usd():.2f})",
-            url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
-            color=0x00ff00
-        )
-
-        img_file = discord.File(kong_image_path, filename=image_name)
-        discord_message.set_thumbnail(url=f"attachment://{image_name}")
-
-        discord_message.add_field(
-            name="Defense",
-            value=META[kong_token_id]["boosts"]["defense"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Finish",
-            value=META[kong_token_id]["boosts"]["finish"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Shooting",
-            value=META[kong_token_id]["boosts"]["shooting"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Vision",
-            value=META[kong_token_id]["boosts"]["vision"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
-        )
-
-        discord_message.add_field(
-            name="Boost Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
-        )
-        discord_message.add_field(
-            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=True
-        )
-        discord_message.add_field(
-            name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
-        )
+        img_file, discord_message = build_rarity_card(kong_token_id)
 
         await ctx.channel.send(file=img_file, embed=discord_message)
 
-    # TODO: not DRY (above is the same code pretty much)
     @bot.command(
         help=("$visualrank <rank number>"),
         brief="Gives you the kong whose visual rank is your input."
@@ -273,64 +221,32 @@ def register_commands(bot):
     async def visualrank(ctx, *args):
 
         total_rank_value = int(args[0])
-        kong_token_id = 0
+        kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
             if kong["visualRarityScore"]["rank"] == total_rank_value:
-                kong_token_id = ix
-                break
+                kong_token_id.append(ix)
 
-        image_name = f"{kong_token_id}.jpg"
-        kong_image_path = os.path.join(KONGS_PATH, image_name)
-        kong_image = ""
-        with open(kong_image_path, "rb") as image_file:
-            kong_image = base64.b64encode(image_file.read())
+        for kong_id in kong_token_id:
+            img_file, discord_message = build_rarity_card(kong_id)
+            await ctx.channel.send(file=img_file, embed=discord_message)
 
-        discord_message = discord.Embed(
-            title=f"Kong #{kong_token_id} Rarity Card",
-            # description=f"Price: {data.price_eth()} {data.payment_symbol}, (${data.price_usd():.2f})",
-            url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
-            color=0x00ff00
-        )
+    @bot.command(
+        help=("$boostrank <rank number>"),
+        brief="Gives you the kong whose boost rank is your input."
+    )
+    async def boostrank(ctx, *args):
 
-        img_file = discord.File(kong_image_path, filename=image_name)
-        discord_message.set_thumbnail(url=f"attachment://{image_name}")
+        total_rank_value = int(args[0])
+        kong_token_id: List[int] = []
 
-        discord_message.add_field(
-            name="Defense",
-            value=META[kong_token_id]["boosts"]["defense"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Finish",
-            value=META[kong_token_id]["boosts"]["finish"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Shooting",
-            value=META[kong_token_id]["boosts"]["shooting"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Vision",
-            value=META[kong_token_id]["boosts"]["vision"],
-            inline=True
-        )
-        discord_message.add_field(
-            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
-        )
+        for ix, kong in enumerate(META):
+            if kong["boosts"]["rank"] == total_rank_value:
+                kong_token_id.append(ix)
 
-        discord_message.add_field(
-            name="Boost Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
-        )
-        discord_message.add_field(
-            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=True
-        )
-        discord_message.add_field(
-            name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
-        )
-
-        await ctx.channel.send(file=img_file, embed=discord_message)
+        for kong_id in kong_token_id:
+            img_file, discord_message = build_rarity_card(kong_id)
+            await ctx.channel.send(file=img_file, embed=discord_message)
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):
