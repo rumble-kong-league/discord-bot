@@ -117,6 +117,9 @@ def register_commands(bot):
             image_string = "image_original_url"
 
         params = {"token_ids": args[0], "collection_slug": "rumble-kong-league"}
+        # TODO: opensea gives pinata link that doesn't work. Debug this.
+        # TODO: if that is the case, use dweb or ipfs gateway like so:
+        # TODO: https://ipfs.io/ipfs/QM.... <- and return this
         kong_url = opensea.fetch_opensea_asset(consts.OPENSEA_ASSETS_URL, params)[
             "assets"
         ][0][image_string]

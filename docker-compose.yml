@@ -5,17 +5,11 @@ services:
     image: rumblekongleague/discord-bot
     env_file:
       - $PWD/.env
-    # port 5000 is in use on Macs
-    # so if someone wants to dev locally, they would have
-    # to tinker with the port. Thus I set it to 5050
-    # to avoid issues on Mac
     ports:
       - "5050"
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
-    networks:
-      - web
 
   watchtower:
     image: containrrr/watchtower
@@ -26,9 +20,4 @@ services:
     ports:
       - "8080:8080"
     restart: always
-    command: --label-enable --cleanup --interval 30
-    networks:
-      - web
-
-networks:
-  web:
+    command: --label-enable --cleanup --interval 900
