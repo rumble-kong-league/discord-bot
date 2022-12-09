@@ -30,10 +30,6 @@ OPENSEA_EVENTS_URL = OPENSEA_API_BASE_URL + "/events"
 STYLE_TRAIT_TYPES = ["Background", "Fur", "Clothes", "Mouth", "Eyes", "Head"]
 BOOST_TRAIT_TYPES = ["Shooting", "Defense", "Vision", "Finish"]
 
-AVAILABLE_DRIPS = [
-    "overalls",
-]
-
 COLLECTIONS = {
     "kongs": {
         "verbose": "Rumble Kong League",
