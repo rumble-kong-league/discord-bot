@@ -44,7 +44,9 @@ def draw_naked_kong(kong_id):
     naked_kong_image = util.fetch_image(naked_kong_image_url, (512, 512))
 
     replaced_background = replace_pixels(
-        naked_kong_image.getdata().convert("RGBA"), background_color, kong_base["Background"]
+        naked_kong_image.getdata().convert("RGBA"),
+        background_color,
+        kong_base["Background"]
     )
     naked_kong_image.putdata(replaced_background)
 
@@ -59,10 +61,7 @@ def apply_drip(kong_image, drip_type, is_jersey=False):
     if is_jersey == True:
         drip_image_url = os.path.join(consts.JERSEYS_PATH, consts.TEAMS[drip_type])
     else:
-        if drip_type in consts.AVAILABLE_DRIPS:
-            drip_image_url = os.path.join(consts.DRIP_PATH, consts.DRIP[drip_type])
-        else:
-            raise Exception("Drip not available")
+        drip_image_url = os.path.join(consts.DRIP_PATH, consts.DRIP[drip_type])
 
     drip_image = Image.open(drip_image_url).resize((512, 512))
     kong_image = kong_image.convert("RGB")
