@@ -89,7 +89,7 @@ DRIP = {
     "suave": "suave.png",
     "spnyc": "spnyc.png",
     "pennyjar": "pennyjar.png",
-    "usa" : "USA.png",
+    "usa" : "usa.png",
     "iran" : "Iran.png",
     "china" : "China.png",
     "egypt" : "Egypt.png",
