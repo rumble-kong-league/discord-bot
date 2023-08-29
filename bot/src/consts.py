@@ -79,7 +79,6 @@ DRIP = {
     "virgil": "virgil.png",
     "pinksuit": "pinksuit.png",
     "blacksuit": "blacksuit.png",
-    "usa": "usa.png",
     "boostgang": "boostgang.png",
     "denim": "denim.png",
     "overalls": "overalls.png",
@@ -114,14 +113,14 @@ DRIP = {
     "australia" : "Australia.png",
     "lithuania" : "Lithuania.png",
     "venezuela" : "Venezuela.png",
-    "cape_Verde" : "Cape_Verde.png",
+    "cape_verde" : "Cape_Verde.png",
     "montenegro" : "Montenegro.png",
-    "ivory_Coast" : "Ivory_Coast.png",
-    "new_Zealand" : "New_Zealand.png",
+    "ivory_coast" : "Ivory_Coast.png",
+    "new_zealand" : "New_Zealand.png",
     "philippines" : "Philippines.png",
-    "puerto_Rico" : "Puerto_Rico.png",
-    "south_Sudan" : "South_Sudan.png",
-    "dominican_Republic" : "Dominican_Republic.png"
+    "puerto_rico" : "Puerto_Rico.png",
+    "south_sudan" : "South_Sudan.png",
+    "dominican_republic" : "Dominican_Republic.png"
 }
 
 TEAMS = {
