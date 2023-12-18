@@ -22,6 +22,11 @@ def initialize_log():
     return path
 
 
+def pinata2ipfs_url(pinata_url):
+    cid = pinata_url.split("/")[-1]
+    return f"https://ipfs.io/ipfs/{cid}"
+
+
 def log(text, depth=0):
     msg = "[" + get_formatted_datetime() + "] " + ("--> " * depth) + text
     print(msg)
