@@ -23,9 +23,11 @@ STAFF_PATH = os.path.join(ASSETS_PATH, "staff")
 DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
 OPENSEA_API_KEY = os.environ["OPENSEA_API_KEY"]
 
-OPENSEA_API_BASE_URL = "https://api.opensea.io/api/v1"
+OPENSEA_API_BASE_URL = "https://api.opensea.io/api/v2"
 OPENSEA_ASSETS_URL = OPENSEA_API_BASE_URL + "/assets"
 OPENSEA_EVENTS_URL = OPENSEA_API_BASE_URL + "/events"
+
+KONGS_ETHEREUM_ADDRESS = "0xef0182dc0574cd5874494a120750fd222fdb909a"
 
 STYLE_TRAIT_TYPES = ["Background", "Fur", "Clothes", "Mouth", "Eyes", "Head"]
 BOOST_TRAIT_TYPES = ["Shooting", "Defense", "Vision", "Finish"]

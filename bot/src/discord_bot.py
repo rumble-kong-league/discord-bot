@@ -1,34 +1,42 @@
 import os
+from bot.src.util import pinata2ipfs_url
+
 # from os.path import exists
 import discord
 from discord.ext import commands
 from io import BytesIO
+
 # from jokeapi import Jokes
 # import time
 # from random import randint
 import json
+
 # import base64
 from typing import Tuple, List
 
 import bot.src.consts as consts  # pylint: disable=import-error
+
 # import bot.src.util as util
 import bot.src.opensea as opensea  # pylint: disable=import-error
 import bot.src.kong as kong_util  # pylint: disable=import-error
 
 
+KONG_ASSET_OPENSEA_URL = "https://opensea.io/assets/ethereum/0xef0182dc0574cd5874494a120750fd222fdb909a/"
 
-KONG_ASSET_OPENSEA_URL = (
-    "https://opensea.io/assets/ethereum/0xef0182dc0574cd5874494a120750fd222fdb909a/"
+ASSETS_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets"
 )
-
-ASSETS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
 KONGS_PATH = os.path.join(ASSETS_PATH, "kongs")
 META_PATH = os.path.join(ASSETS_PATH, "meta.json")
 META = json.loads(open(META_PATH).read())
 
 
 def initialize_bot():
-    bot = commands.Bot(command_prefix="$", case_insensitive=True, intents=discord.Intents.default())
+    bot = commands.Bot(
+        command_prefix="$",
+        case_insensitive=True,
+        intents=discord.Intents.default(),
+    )
     register_commands(bot)
     bot.run(consts.DISCORD_TOKEN)
 
@@ -37,63 +45,93 @@ async def send_image_binary(ctx, img):
     with BytesIO() as image_binary:
         img.save(image_binary, "PNG")
         image_binary.seek(0)
-        await ctx.channel.send(file=discord.File(fp=image_binary, filename="tacpeo.png"))    
+        await ctx.channel.send(
+            file=discord.File(fp=image_binary, filename="tacpeo.png")
+        )
 
 
 # Include chat commands within this function to ensure they are registered on startup
 def register_commands(bot):
-
-    @bot.command(help="Sweep those thin floors! fr fr", brief="Sweep those thin floors! fr fr")
+    @bot.command(
+        help="Sweep those thin floors! fr fr",
+        brief="Sweep those thin floors! fr fr",
+    )
     async def sweep(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "sweep.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "sweep.gif"))
+        )
 
     @bot.command(help="On your head!", brief="On your head!")
     async def oyh(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "oyh.gif"))
+        )
 
     @bot.command(help="Let's focking go!", brief="Let's focking go!")
     async def lfg(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif"))
+        )
 
     @bot.command(help="Looking for group!", brief="Looking for group!")
     async def lookingforgroup(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "lfg.gif"))
+        )
 
     @bot.command(help="Good Morning!", brief="Good Morning!")
     async def gm(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gm.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "gm.gif"))
+        )
 
     @bot.command(help="Good Night!", brief="Good Night!")
     async def gn(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "gn.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "gn.gif"))
+        )
 
     @bot.command(help="There is no ceiling!", brief="There is no ceiling!")
     async def ceiling(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "ceiling.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "ceiling.gif"))
+        )
 
     @bot.command(help="I am Kong!", brief="I am Kong!")
     async def iamkong(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "iamkong.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "iamkong.gif"))
+        )
 
     @bot.command(help="Yes.", brief="Yes.")
     async def yes(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "yes.png")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "yes.png"))
+        )
 
     @bot.command(help="Ready to Rumble.", brief="Ready to Rumble.")
     async def rumble(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "rumble.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "rumble.gif"))
+        )
 
     @bot.command(help="We are Kong.", brief="We are Kong.")
     async def wearekong(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "wearekong.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "wearekong.gif"))
+        )
 
     @bot.command(help="Alpha alert.", brief="Alpha alert.")
     async def alpha(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "alpha.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "alpha.gif"))
+        )
 
     @bot.command(help="Tacpeo.", brief="Tacpeo.")
     async def tacpeo(ctx, *_args):
-        await ctx.channel.send(file=discord.File(os.path.join(consts.MEMES_PATH, "tacpeo.gif")))
+        await ctx.channel.send(
+            file=discord.File(os.path.join(consts.MEMES_PATH, "tacpeo.gif"))
+        )
 
     @bot.command(
         help="$praise <team member name>",
@@ -104,7 +142,9 @@ def register_commands(bot):
         if name not in consts.STAFF:
             name = "team"
         await ctx.channel.send(
-            file=discord.File(os.path.join(consts.STAFF_PATH, consts.STAFF[name]))
+            file=discord.File(
+                os.path.join(consts.STAFF_PATH, consts.STAFF[name])
+            )
         )
 
     @bot.command(
@@ -112,17 +152,13 @@ def register_commands(bot):
         brief="Get the image of a Rumble Kong by token id.",
     )
     async def image(ctx, *args):
-        image_string = "image_url"
-        if len(args) > 1 and str(args[1]).lower() == "hd":
-            image_string = "image_original_url"
-
-        params = {"token_ids": args[0], "collection_slug": "rumble-kong-league"}
-        # TODO: opensea gives pinata link that doesn't work. Debug this.
-        # TODO: if that is the case, use dweb or ipfs gateway like so:
-        # TODO: https://ipfs.io/ipfs/QM.... <- and return this
-        kong_url = opensea.fetch_opensea_asset(consts.OPENSEA_ASSETS_URL, params)[
-            "assets"
-        ][0][image_string]
+        kong_url = opensea.fetch_opensea_asset(
+            consts.KONGS_ETHEREUM_ADDRESS, args[0]
+        )["nft"]["image_url"]
+        
+        if "pinata" in kong_url:
+            kong_url = pinata2ipfs_url(kong_url)
+            
         await ctx.channel.send(str(kong_url))
 
     @bot.command(
@@ -143,7 +179,9 @@ def register_commands(bot):
         dripped_kong = kong_util.apply_drip(kong, str(args[1]).lower(), False)
         await send_image_binary(ctx, dripped_kong)
 
-    def build_rarity_card(kong_token_id: int) -> Tuple[discord.File, discord.Embed]:
+    def build_rarity_card(
+        kong_token_id: int,
+    ) -> Tuple[discord.File, discord.Embed]:
         image_name = f"{kong_token_id}.jpg"
         kong_image_path = os.path.join(KONGS_PATH, image_name)
         img_file = discord.File(kong_image_path, filename=image_name)
@@ -151,51 +189,58 @@ def register_commands(bot):
         discord_message = discord.Embed(
             title=f"Kong #{kong_token_id} Rarity Card",
             url=f"{KONG_ASSET_OPENSEA_URL}{kong_token_id}",
-            color=0x00ff00
+            color=0x00FF00,
         )
 
         discord_message.set_thumbnail(url=f"attachment://{image_name}")
         discord_message.add_field(
             name="Defense",
             value=META[kong_token_id]["boosts"]["defense"],
-            inline=True
+            inline=True,
         )
         discord_message.add_field(
             name="Finish",
             value=META[kong_token_id]["boosts"]["finish"],
-            inline=True
+            inline=True,
         )
         discord_message.add_field(
             name="Shooting",
             value=META[kong_token_id]["boosts"]["shooting"],
-            inline=True
+            inline=True,
         )
         discord_message.add_field(
             name="Vision",
             value=META[kong_token_id]["boosts"]["vision"],
-            inline=True
+            inline=True,
         )
         discord_message.add_field(
-            name="Boost Total", value=META[kong_token_id]["boostsRank"]["total"], inline=False
+            name="Boost Total",
+            value=META[kong_token_id]["boostsRank"]["total"],
+            inline=False,
         )
         discord_message.add_field(
-            name="Boost Rank", value=META[kong_token_id]["boostsRank"]["rank"], inline=True
+            name="Boost Rank",
+            value=META[kong_token_id]["boostsRank"]["rank"],
+            inline=True,
         )
         discord_message.add_field(
-            name="Visual Rank", value=META[kong_token_id]["visualRarityScore"]["rank"], inline=True
+            name="Visual Rank",
+            value=META[kong_token_id]["visualRarityScore"]["rank"],
+            inline=True,
         )
         discord_message.add_field(
-            name="Total Rank", value=META[kong_token_id]["totalRarityRank"], inline=True
+            name="Total Rank",
+            value=META[kong_token_id]["totalRarityRank"],
+            inline=True,
         )
 
         return img_file, discord_message
 
     @bot.command(
         help=("$rank <kong token id>"),
-        brief="Gives you (i) visual, (ii) boost and (iii) total rank of your kong."
+        brief="Gives you (i) visual, (ii) boost and (iii) total rank of your kong.",
     )
     async def rank(ctx, *args):
-
         kong_token_id = int(args[0])
         img_file, discord_message = build_rarity_card(kong_token_id)
 
@@ -203,12 +248,11 @@ def register_commands(bot):
 
     @bot.command(
         help=("$totalrank <rank number>"),
-        brief="Gives you the kong whose total rank is your input."
+        brief="Gives you the kong whose total rank is your input.",
     )
     async def totalrank(ctx, *args):
-
         total_rank_value = int(args[0])
-        rank_diff = float('inf')
+        rank_diff = float("inf")
         kong_token_id = -1
 
         for ix, kong in enumerate(META):
@@ -223,24 +267,24 @@ def register_commands(bot):
 
     @bot.command(
         help=("$visualrank <rank number>"),
-        brief="Gives you the kong whose visual rank is your input."
+        brief="Gives you the kong whose visual rank is your input.",
     )
     async def visualrank(ctx, *args):
-
-        rank_diff = float('inf')
+        rank_diff = float("inf")
         closest_kong_token_id = -1
         visual_rank_value = int(args[0])
         kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
-
             if kong["visualRarityScore"]["rank"] == visual_rank_value:
                 # ! only allow up to 5 matches
                 if len(kong_token_id) == 5:
                     break
                 kong_token_id.append(ix)
 
-            new_rank_diff = abs(kong["visualRarityScore"]["rank"] - visual_rank_value)
+            new_rank_diff = abs(
+                kong["visualRarityScore"]["rank"] - visual_rank_value
+            )
             if new_rank_diff < rank_diff:
                 closest_kong_token_id = ix
                 rank_diff = new_rank_diff
@@ -250,23 +294,23 @@ def register_commands(bot):
                 img_file, discord_message = build_rarity_card(kong_id)
                 await ctx.channel.send(file=img_file, embed=discord_message)
         else:
-            img_file, discord_message = build_rarity_card(closest_kong_token_id)
+            img_file, discord_message = build_rarity_card(
+                closest_kong_token_id
+            )
             await ctx.channel.send(file=img_file, embed=discord_message)
 
     # TODO: not DRY. same as above
     @bot.command(
         help=("$boostrank <rank number>"),
-        brief="Gives you the kong whose boost rank is your input."
+        brief="Gives you the kong whose boost rank is your input.",
     )
     async def boostrank(ctx, *args):
-
-        rank_diff = float('inf')
+        rank_diff = float("inf")
         closest_kong_token_id = -1
         boost_rank_value = int(args[0])
         kong_token_id: List[int] = []
 
         for ix, kong in enumerate(META):
-
             if kong["boostsRank"]["rank"] == boost_rank_value:
                 # ! only allow up to 5 matches
                 if len(kong_token_id) == 5:
@@ -282,8 +326,10 @@ def register_commands(bot):
                 img_file, discord_message = build_rarity_card(kong_id)
                 await ctx.channel.send(file=img_file, embed=discord_message)
         else:
-            img_file, discord_message = build_rarity_card(closest_kong_token_id)
-            await ctx.channel.send(file=img_file, embed=discord_message)          
+            img_file, discord_message = build_rarity_card(
+                closest_kong_token_id
+            )
+            await ctx.channel.send(file=img_file, embed=discord_message)
 
     # @bot.command(help="Tells you a joke.", brief="Funny jokes left and right.")
     # async def joke(ctx, *args):

@@ -15,8 +15,11 @@ def construct_headers():
     }
 
 
-def fetch_opensea_asset(url, params):
-    return (request("GET", url, headers=construct_headers(), params=params)).json()
+def fetch_opensea_asset(address, token_id):
+    url = f"https://api.opensea.io/api/v2/chain/ethereum/contract/{address}/nfts/{token_id}"
+    resp = request("GET", url, headers=construct_headers())
+    resp_json = resp.json()
+    return resp_json
 
 
 def initialize_asset_cache(
@@ -133,7 +136,7 @@ def update_asset_cache(collection):
         "collection_slug": consts.COLLECTIONS[collection]["slug"],
         "only_opensea": "true",
         "event_type": "created",
-        "occured_after": cache["updated"],
+        "after": cache["updated"],
     }
 
     page = fetch_opensea_asset(consts.OPENSEA_EVENTS_URL, params)

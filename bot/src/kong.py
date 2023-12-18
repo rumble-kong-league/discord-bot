@@ -21,12 +21,15 @@ def replace_pixels(data, from_rgb, to_rgb):
 
 
 def draw_naked_kong(kong_id):
-    params = {"token_ids": kong_id, "collection_slug": "rumble-kong-league"}
-    kong_assets = opensea.fetch_opensea_asset(consts.OPENSEA_ASSETS_URL, params)[
-        "assets"
-    ][0]
-    
-    kong_image = util.fetch_image(kong_assets["image_url"], (512, 512))
+    kong_assets = opensea.fetch_opensea_asset(consts.KONGS_ETHEREUM_ADDRESS, kong_id)[
+        "nft"
+    ]
+
+    kong_url = kong_assets["image_url"]
+    if "pinata" in kong_url:
+        kong_url = util.pinata2ipfs_url(kong_url)
+        
+    kong_image = util.fetch_image(kong_url, (512, 512))
     
     return kong_image
 
@@ -39,8 +42,9 @@ def apply_drip(kong_image, drip_type, is_jersey=False):
     else:
         drip_image_url = os.path.join(consts.DRIP_PATH, consts.DRIP[drip_type])
 
-    drip_image = Image.open(drip_image_url).resize((500, 500))
-    kong_image = kong_image.convert("RGB")
+    size = (500, 500)
+    drip_image = Image.open(drip_image_url).resize(size)
+    kong_image = kong_image.convert("RGB").resize(size)
     kong_image.paste(drip_image.convert("RGB"), (0, 0), mask=drip_image)
 
     return kong_image
